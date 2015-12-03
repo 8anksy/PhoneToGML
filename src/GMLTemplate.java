@@ -57,17 +57,19 @@ public class GMLTemplate {
 		XMLOutputter outputter = new XMLOutputter();
 		outputter.setFormat(Format.getPrettyFormat().setOmitDeclaration(true));
 		
-		outputter.output(this.d, new FileWriter("template.gml"));
+		outputter.output(this.d, new FileWriter("ZZiPhoneAccData.gml"));
 		System.out.println("Your document is ready.");
 	}
 	public void GeneratePoints(ArrayList<Float> x, ArrayList<Float> y, ArrayList<Float> z, ArrayList<Float> t) {
 		Element root = this.d.getRootElement();
 		Element stroke = root.getChild("tag").getChild("drawing").getChild("stroke");
 		ArrayList<Element> points = new ArrayList<Element>();
+		Float interval = (float)0;
 		for (int i = 0; i < x.size(); i++) {
+			interval = z.get(i) - interval;
 			Element point = new Element("pt");
-			point.addContent(new Element ("x").setText(String.format("%.6f", x.get(i))));
-			point.addContent(new Element ("y").setText(String.format("%.6f", y.get(i))));
+			point.addContent(new Element ("x").setText(String.format("%.6f", x.get(i)/(interval))));
+			point.addContent(new Element ("y").setText(String.format("%.6f", y.get(i)/(interval))));
 			point.addContent(new Element ("z").setText(String.format("%.6f", z.get(i))));
 			point.addContent(new Element ("time").setText(String.format("%.6f", t.get(i))));
 			points.add(point);

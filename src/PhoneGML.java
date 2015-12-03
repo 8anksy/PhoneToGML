@@ -23,11 +23,17 @@ public class PhoneGML {
 		System.out.println(csv.GetTimes().size());
 		ArrayList<Float> xFloats = NormalizeDataToFloats(csv.GetXs());
 		ArrayList<Float> yFloats = NormalizeDataToFloats(csv.GetYs());
-		ArrayList<Float> zFloats = NormalizeDataToFloats(csv.GetZs());
+		
+		//it seems that Zs should be a reflection of time for the GraffitiAnalysis app
+		// ArrayList<Float> zFloats = NormalizeDataToFloats(csv.GetZs());
+		ArrayList<Float> zFloats = new ArrayList<Float>();
 		ArrayList<Float> tFloats = new ArrayList<Float>();
 		
 		for (String s : csv.GetTimes()) {
-			tFloats.add(Float.valueOf(s));
+			zFloats.add(Float.valueOf(s));
+		}
+		for (Float f : zFloats) {
+			tFloats.add(f/100);
 		}
 		
 		base.GeneratePoints(xFloats, yFloats, zFloats, tFloats);
